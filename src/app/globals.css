@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/* Mirante — tokens
+   Papel frio + tinta azul-marinho; "Lagoa" (verde-azulado) como acento de ação;
+   âmbar só para marcos da apresentação. Gráficos usam a paleta categórica validada. */
+@theme {
+  --color-paper: #eef1f4;
+  --color-surface: #ffffff;
+  --color-ink: #14213d;
+  --color-ink-2: #2b3a5c;
+  --color-slate: #5a6b85;
+  --color-mute: #8492a6;
+  --color-line: #d3dae3;
+  --color-line-soft: #e4e9ef;
+  --color-lagoa: #0f7b7b;
+  --color-lagoa-ink: #0b5e5e;
+  --color-lagoa-wash: #e3f1f0;
+  --color-ambar: #b77900;
+  --color-ambar-wash: #fbf1dc;
+  --color-good: #2e7d32;
+  --color-warn: #a35f00;
+  --color-crit: #c62828;
+
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-spline-mono), ui-monospace, monospace;
+
+  --radius-panel: 10px;
+  --radius-ctl: 6px;
+}
+
+html { background: var(--color-paper); color: var(--color-ink); }
+body { font-family: var(--font-sans); font-feature-settings: "ss01", "tnum"; -webkit-font-smoothing: antialiased; }
+
+:focus-visible { outline: 2px solid var(--color-lagoa); outline-offset: 2px; border-radius: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* componentes base */
+@layer components {
+  .panel { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-panel); }
+  .btn { display: inline-flex; align-items: center; gap: .5rem; height: 2.25rem; padding: 0 .9rem; border-radius: var(--radius-ctl);
+         font-weight: 600; font-size: .875rem; transition: background .15s, color .15s, border-color .15s; white-space: nowrap; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-primary { background: var(--color-lagoa); color: white; }
+  .btn-primary:hover:not(:disabled) { background: var(--color-lagoa-ink); }
+  .btn-ghost { border: 1px solid var(--color-line); background: white; color: var(--color-ink); }
+  .btn-ghost:hover:not(:disabled) { border-color: var(--color-slate); }
+  .btn-danger { border: 1px solid #f0c9c9; background: white; color: var(--color-crit); }
+  .btn-danger:hover:not(:disabled) { background: #fdf0f0; }
+  .field { display: grid; gap: .35rem; font-size: .875rem; }
+  .field > span { color: var(--color-slate); font-weight: 500; }
+  .input { height: 2.25rem; border: 1px solid var(--color-line); border-radius: var(--radius-ctl); padding: 0 .65rem; background: white; font-size: .875rem; width: 100%; }
+  textarea.input { height: auto; padding: .5rem .65rem; line-height: 1.45; }
+  .input:focus { outline: none; border-color: var(--color-lagoa); box-shadow: 0 0 0 3px var(--color-lagoa-wash); }
+  .tabular { font-variant-numeric: tabular-nums; }
+}
+
+@media print {
+  aside, nav, [role="tablist"], .print\:hidden { display: none !important; }
+  html, body { background: white; }
+  main { padding: 0 !important; }
+}
