@@ -3,6 +3,7 @@ import { UploadCloud } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { PageHeader } from "@/components/ui";
+import { SUPABASE_URL } from "@/lib/supabase/env";
 import { api, CONSENT_METHOD_LABEL, MEETING_TYPE_LABEL } from "@/lib/ui";
 
 function uploadWithProgress(url: string, file: File, onProgress: (p: number) => void) {
@@ -35,7 +36,7 @@ export default function NovaReuniao() {
         method: "POST", json: { title: form.title, meeting_type: form.meeting_type, recorded_at: form.recorded_at || null, file_name: file.name },
       });
       await api(`/api/meetings/${meeting.id}/consent`, { method: "POST", json: { method: form.method, notes: form.notes, confirm: form.confirm } });
-      const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/upload/sign/recordings/${upload.path}?token=${upload.token}`;
+      const url = `${SUPABASE_URL}/storage/v1/object/upload/sign/recordings/${upload.path}?token=${upload.token}`;
       await uploadWithProgress(url, file, setProgress);
       await api(`/api/meetings/${meeting.id}/uploaded`, { method: "POST" });
       router.push(`/reunioes/${meeting.id}/configurar`);

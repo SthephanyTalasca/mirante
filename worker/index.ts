@@ -4,6 +4,7 @@ import { mkdir, mkdtemp, readFile, rm } from "node:fs/promises";
 import { hostname, tmpdir } from "node:os";
 import path from "node:path";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { SUPABASE_URL, supabaseSecretKey } from "../src/lib/supabase/env";
 import { generateReport, loadCategories, loadOrgSettings, loadParticipants, runRetention } from "../src/lib/server/data";
 import { frameSize } from "./imaging";
 import { extractFrames, previewFrames, probe } from "./media";
@@ -15,7 +16,7 @@ const WORKER_ID = `${hostname()}-${process.pid}`;
 const POLL_MS = Number(process.env.WORKER_POLL_MS ?? 4000);
 const CONCURRENCY = Number(process.env.AI_CONCURRENCY ?? 4);
 
-const db: SupabaseClient = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
+const db: SupabaseClient = createClient(SUPABASE_URL, supabaseSecretKey(), {
   auth: { persistSession: false },
 });
 

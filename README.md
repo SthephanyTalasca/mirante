@@ -30,14 +30,15 @@ tests/                       testes do núcleo e teste de ponta a ponta com víd
 
 ## Como rodar
 
-1. **Supabase**: crie um projeto e rode as migrations, em ordem:
-   ```bash
-   supabase link --project-ref <ref>
-   supabase db push            # ou cole os 4 arquivos de supabase/migrations no SQL Editor
-   ```
-   Em *Authentication → URL Configuration*, adicione `http://localhost:3000/auth/callback`.
+1. **Supabase** (projeto `etwvchzgbyyotckdpbhr`):
+   - *SQL Editor → New query*: cole o conteúdo de `supabase/setup.sql` e clique em **Run** (uma vez só).
+   - *Authentication → URL Configuration*: adicione `http://localhost:3000/auth/callback` em Redirect URLs.
+   - *Storage → Settings*: o limite global de upload do plano gratuito é 50 MB; para vídeos maiores, aumente (plano Pro).
 
-2. **Variáveis**: `cp .env.example .env.local` e preencha (Supabase, chave da IA, `CRON_SECRET`).
+2. **Variáveis**: `cp .env.example .env.local` e preencha:
+   - `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (públicas);
+   - `SUPABASE_SECRET_KEY` (*Project Settings → API Keys → Secret keys*). **Secreta**: só no `.env.local`, no servidor e no worker;
+   - a chave da IA (`ANTHROPIC_API_KEY` ou `OPENAI_API_KEY`) e `CRON_SECRET`.
 
 3. **App**:
    ```bash
