@@ -11,7 +11,7 @@ select 'convite', p.role, p.org_id = (select org_id from profiles where id='1111
 
 -- como usuária A (RLS)
 set role authenticated; select set_config('request.jwt.claim.sub','11111111-1111-1111-1111-111111111111',false);
-insert into meetings(org_id,title,video_path) select current_org_id(),'Demo','x' returning id \gset m_
+insert into meetings(org_id,title,video_path) select private.current_org_id(),'Demo','x' returning id \gset m_
 insert into participants(meeting_id,label,is_host) values (:'m_id','Host',true) returning id \gset h_
 insert into participants(meeting_id,label) values (:'m_id','P1') returning id \gset p_
 insert into participant_regions(participant_id,x,y,w,h) values (:'p_id',0.5,0,0.5,0.5);
@@ -25,7 +25,7 @@ insert into participants(meeting_id,label,is_host) values (:'m_id','Host2',true)
 -- usuária B não vê nada da A
 select set_config('request.jwt.claim.sub','22222222-2222-2222-2222-222222222222',false);
 select 'B ve reunioes de A', count(*) from meetings where id=:'m_id';
-select 'B ve catalogo de A', count(*) from behavior_categories where org_id <> current_org_id();
+select 'B ve catalogo de A', count(*) from behavior_categories where org_id <> private.current_org_id();
 reset role;
 \echo '--- esperado: ocorrência do host recusada (mesmo sem RLS)'
 insert into occurrences(meeting_id,participant_id,category_id,description,start_ms,end_ms,confidence)

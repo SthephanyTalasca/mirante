@@ -31,7 +31,7 @@ tests/                       testes do núcleo e teste de ponta a ponta com víd
 ## Como rodar
 
 1. **Supabase** (projeto `etwvchzgbyyotckdpbhr`):
-   - *SQL Editor → New query*: cole o conteúdo de `supabase/setup.sql` e clique em **Run** (uma vez só).
+   - Banco já instalado nesse projeto (migrations 0001–0006, sem alertas de segurança). Para um projeto novo: *SQL Editor → New query*, cole `supabase/setup.sql` e clique em **Run**.
    - *Authentication → URL Configuration*: adicione `http://localhost:3000/auth/callback` em Redirect URLs.
    - *Storage → Settings*: o limite global de upload do plano gratuito é 50 MB; para vídeos maiores, aumente (plano Pro).
 

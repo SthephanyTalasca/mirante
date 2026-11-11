@@ -10,7 +10,6 @@ function uploadWithProgress(url: string, file: File, onProgress: (p: number) => 
   return new Promise<void>((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open("PUT", url);
-    xhr.setRequestHeader("x-upsert", "true");
     xhr.setRequestHeader("content-type", file.type || "video/mp4");
     xhr.upload.onprogress = (e) => e.lengthComputable && onProgress(e.loaded / e.total);
     xhr.onload = () => (xhr.status < 300 ? resolve() : reject(new Error(`Envio falhou (${xhr.status}).`)));
